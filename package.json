@@ -1,6 +1,6 @@
 {
   "name": "m2m-status-cli",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "CLI to check status of your m2m-status sims",
   "main": "src",
   "scripts": {
