@@ -17,15 +17,40 @@ program
   .option('-u, --user [user]', 'Add user')
   .option('-p, --password [password]', 'Add password')
   .option('-s, --sim [sim]', 'Add sim')
+  .option('-i, --icc [icc]', 'Add icc')
   .parse(process.argv);
 
-if (program.user && program.password && program.sim) {
+if (program.user && program.password && (program.sim || program.icc)) {
   const client = new m2m({user: program.user, password: program.password});
-  client.checkSim(program.sim).then(result => {
-    console.log(chalk.green(`Administration: ${result.admin ? 'OK' : 'Error'}`));
-    console.log(chalk.green(`GSM: ${result.gsm ? 'OK' : 'Error'}`));
-    console.log(chalk.green(`GPRS: ${result.gprs ? 'OK' : 'Error'}`));
-  }).catch(err => console.log(chalk.red(err.message)));
+  let method, data;
+  if (program.sim) {
+    method = 'checkSim';
+    data = program.sim;
+  } else {
+    method = 'checkIcc';
+    data = program.icc;
+  }
+  client[method](data).then(result => onResult(result)).catch(err => onError(err));
 } else {
   program.help();
 }
+
+const onResult = result => {
+  if (result.admin) {
+    console.log(chalk.green('Administration: OK'));
+  } else {
+    console.log(chalk.red('Administration: Error'));
+  }
+  if (result.gsm) {
+    console.log(chalk.green('GSM: OK'));
+  } else {
+    console.log(chalk.red('GSM: Error'));
+  }
+  if (result.gprs) {
+    console.log(chalk.green('GPRS: OK'));
+  } else {
+    console.log(chalk.red('GPRS: Error'));
+  }
+};
+
+const onError = err => console.log(chalk.red(err.message));
