@@ -35,7 +35,7 @@
     "chalk": "^2.0.0",
     "commander": "^2.9.0",
     "m2m-status": "1.0.2",
-    "update-notifier": "^2.1.0"
+    "update-notifier": "^6.0.0"
   },
   "devDependencies": {
     "eslint": "5.16.0",
