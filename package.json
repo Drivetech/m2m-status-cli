@@ -33,7 +33,7 @@
   "homepage": "https://github.com/lgaticaq/m2m-status-cli#readme",
   "dependencies": {
     "chalk": "^2.0.0",
-    "commander": "^2.9.0",
+    "commander": "^10.0.0",
     "m2m-status": "1.0.2",
     "update-notifier": "^2.1.0"
   },
